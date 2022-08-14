@@ -38,8 +38,6 @@ class LayerManager {
         return this.layerMap.get(layerName);
     }
 };
-// レイヤ管理クラスのインスタンス（グローバルに作らないと動作しない）
-const layerManager = new LayerManager();
 
 // レイヤ管理のコンテキスト
 const LayerContext = createContext();
@@ -48,6 +46,7 @@ const LayerStateCountContext = createContext();
 
 // COP実現のためのReact Contextの利用準備のためのコンポーネント
 export const LayerProvider = ({children}) => {
+    const [layerManager] = useState(new LayerManager());
     const [layerStateCount, setLayerStateCount] = useState(0);
     const value = {layerStateCount, setLayerStateCount};
     return (
