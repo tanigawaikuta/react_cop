@@ -7,6 +7,7 @@ React用COPの実験プログラム。
 下記のコマンドを実行する。
 
 ```
+$ npm install
 $ npm start
 ```
 
