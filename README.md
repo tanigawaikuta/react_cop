@@ -1,6 +1,6 @@
 # React COP
 
-React用COPの実験プログラム。
+React上でCOPを実現する実験用プログラム。
 
 ## 動作確認方法
 
@@ -13,7 +13,7 @@ $ npm start
 
 ## COPライブラリの解説
 
-### `LayerProvider`
+### LayerProvider
 
 レイヤ定義やレイヤアクティベート・ディアクティベートが行われる可能性のあるコンポーネントは、下記のように`LayerProvider`で囲うこと。
 
@@ -62,7 +62,7 @@ useEffectWithLayer(() => {
 
 ```
 
-### `Layer`コンポーネント
+### Layerコンポーネント
 
 JSXの記述において、`Layer`コンポーネントで囲ったところは、`name`属性で指定したレイヤがアクティブな場合のみ有効である。
 
