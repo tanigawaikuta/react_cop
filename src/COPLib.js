@@ -19,7 +19,7 @@ class LayerManager {
         this.layerMap.set(layerName, true);
         // 更新確認用
         this.setLayerStateCount(count => count + 1);
-    };
+    }
     // レイヤ非活性化
     deactivateLayer(layerName) {
         if (!this.layerMap.has(layerName)) {
@@ -29,7 +29,7 @@ class LayerManager {
         this.layerMap.set(layerName, false);
         // 更新確認用
         this.setLayerStateCount(count => count + 1);
-    };
+    }
     // レイヤが活性であるかどうかを取得
     getLayerState(layerName) {
         if (!this.layerMap.has(layerName)) {
@@ -62,8 +62,8 @@ export const LayerProvider = ({children}) => {
 export const useLayerManager = () => {
     const {layerStateCount, setLayerStateCount} = useContext(LayerStateCountContext);
     const layerManager = useContext(LayerContext);
-    layerManager.setLayerStateCount = setLayerStateCount;
     layerManager.layerStateCount = layerStateCount;
+    layerManager.setLayerStateCount = setLayerStateCount;
     return layerManager;
 };
 
