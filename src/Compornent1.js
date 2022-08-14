@@ -8,41 +8,41 @@ const Compornent1 = () => {
     const [countA, setCountA] = useState(0);
     const [countB, setCountB] = useState(0);
 
-    // ƒ{ƒ^ƒ“ƒNƒŠƒbƒN‚Ìƒx[ƒXˆ—i‘SƒŒƒCƒ„”ñŠˆ«‚Ìˆ—j
+    // ãƒœã‚¿ãƒ³ã‚¯ãƒªãƒƒã‚¯æ™‚ã®ãƒ™ãƒ¼ã‚¹å‡¦ç†ï¼ˆå…¨ãƒ¬ã‚¤ãƒ¤éæ´»æ€§æ™‚ã®å‡¦ç†ï¼‰
     const onClickBase = () => { setCount(ct => ct + 1); };
     const onClick = useRef(() => { onClickBase(); });
 
-    // ƒŒƒCƒ„AŠˆ«‚Ìˆ—
+    // ãƒ¬ã‚¤ãƒ¤Aæ´»æ€§æ™‚ã®å‡¦ç†
     useEffectWithLayer(() => {
-        // ó‘Ô‚Ì‘‚«Š·‚¦
+        // çŠ¶æ…‹ã®æ›¸ãæ›ãˆ
         setButtonLabel("A");
-        // onClick‚Ì‘‚«Š·‚¦
+        // onClickã®æ›¸ãæ›ãˆ
         onClick.current = () => {
             setText(preText => preText + "A");
-            // ƒx[ƒXˆ—‚ÌŒÄ‚Ño‚µ
+            // ãƒ™ãƒ¼ã‚¹å‡¦ç†ã®å‘¼ã³å‡ºã—
             onClickBase();
         };
     }, "LayerA", []);
 
-    // ƒŒƒCƒ„BŠˆ«‚Ìˆ—
+    // ãƒ¬ã‚¤ãƒ¤Bæ´»æ€§æ™‚ã®å‡¦ç†
     useEffectWithLayer(() => {
-        // ó‘Ô‚Ì‘‚«Š·‚¦
+        // çŠ¶æ…‹ã®æ›¸ãæ›ãˆ
         setButtonLabel("B");
-        // onClick‚Ì‘‚«Š·‚¦
+        // onClickã®æ›¸ãæ›ãˆ
         onClick.current = () => {
             setText(preText => preText + "B");
-            // ƒx[ƒXˆ—‚ÌŒÄ‚Ño‚µ
+            // ãƒ™ãƒ¼ã‚¹å‡¦ç†ã®å‘¼ã³å‡ºã—
             onClickBase();
         };
     }, "LayerB", []);
 
-    // ƒŒƒCƒ„AŠˆ«‚©‚Âcount‚ª•Ï‰»‚µ‚½Û‚Ìˆ—
+    // ãƒ¬ã‚¤ãƒ¤Aæ´»æ€§æ™‚ã‹ã¤countãŒå¤‰åŒ–ã—ãŸéš›ã®å‡¦ç†
     useEffectWithLayer(() => {
         const result = count - countB;
         setCountA(result);
     }, "LayerA", [count]);
 
-    // ƒŒƒCƒ„BŠˆ«‚©‚Âcount‚ª•Ï‰»‚µ‚½Û‚Ìˆ—
+    // ãƒ¬ã‚¤ãƒ¤Bæ´»æ€§æ™‚ã‹ã¤countãŒå¤‰åŒ–ã—ãŸéš›ã®å‡¦ç†
     useEffectWithLayer(() => {
         const result = count - countA;
         setCountB(result);

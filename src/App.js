@@ -5,9 +5,9 @@ import { useLayerManager } from "./COPLib";
 
 function App() {
   const layerManager = useLayerManager();
-  // ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì‰Šú‰»
+  // ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®åˆæœŸåŒ–
   useEffect(() => {
-    // ‰‚ß‚ÉƒŒƒCƒ„A‚ğƒAƒNƒeƒBƒu‚É‚·‚é
+    // åˆã‚ã«ãƒ¬ã‚¤ãƒ¤Aã‚’ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã«ã™ã‚‹
     layerManager.activateLayer("LayerA");
   }, []);
 

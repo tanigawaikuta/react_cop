@@ -1,36 +1,36 @@
 import { useState, useEffect, useContext, createContext } from "react";
 
-// ƒŒƒCƒ„ŠÇ—ƒNƒ‰ƒX
+// ãƒ¬ã‚¤ãƒ¤ç®¡ç†ã‚¯ãƒ©ã‚¹
 class LayerManager {
-    // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+    // ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     constructor() {
-        // ƒŒƒCƒ„ó‘Ô‚ğ•Û‘¶‚·‚é‚½‚ß‚ÌƒnƒbƒVƒ…ƒ}ƒbƒv
+        // ãƒ¬ã‚¤ãƒ¤çŠ¶æ…‹ã‚’ä¿å­˜ã™ã‚‹ãŸã‚ã®ãƒãƒƒã‚·ãƒ¥ãƒãƒƒãƒ—
         this.layerMap = new Map();
-        // XVŠm”F—p
+        // æ›´æ–°ç¢ºèªç”¨
         this.layerStateCount = 0;
         this.setLayerStateCount = null;
     }
-    // ƒŒƒCƒ„Šˆ«‰»
+    // ãƒ¬ã‚¤ãƒ¤æ´»æ€§åŒ–
     activateLayer(layerName) {
         if (!this.layerMap.has(layerName)) {
             this.layerMap.set(layerName, false);
         }
-        // ƒAƒNƒeƒBƒx[ƒg
+        // ã‚¢ã‚¯ãƒ†ã‚£ãƒ™ãƒ¼ãƒˆ
         this.layerMap.set(layerName, true);
-        // XVŠm”F—p
+        // æ›´æ–°ç¢ºèªç”¨
         this.setLayerStateCount(count => count + 1);
     };
-    // ƒŒƒCƒ„”ñŠˆ«‰»
+    // ãƒ¬ã‚¤ãƒ¤éæ´»æ€§åŒ–
     deactivateLayer(layerName) {
         if (!this.layerMap.has(layerName)) {
             this.layerMap.set(layerName, false);
         }
-        // ƒfƒBƒAƒNƒeƒBƒx[ƒg
+        // ãƒ‡ã‚£ã‚¢ã‚¯ãƒ†ã‚£ãƒ™ãƒ¼ãƒˆ
         this.layerMap.set(layerName, false);
-        // XVŠm”F—p
+        // æ›´æ–°ç¢ºèªç”¨
         this.setLayerStateCount(count => count + 1);
     };
-    // ƒŒƒCƒ„‚ªŠˆ«‚Å‚ ‚é‚©‚Ç‚¤‚©‚ğæ“¾
+    // ãƒ¬ã‚¤ãƒ¤ãŒæ´»æ€§ã§ã‚ã‚‹ã‹ã©ã†ã‹ã‚’å–å¾—
     getLayerState(layerName) {
         if (!this.layerMap.has(layerName)) {
             this.layerMap.set(layerName, false);
@@ -38,15 +38,15 @@ class LayerManager {
         return this.layerMap.get(layerName);
     }
 };
-// ƒŒƒCƒ„ŠÇ—ƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒXiƒOƒ[ƒoƒ‹‚Éì‚ç‚È‚¢‚Æ“®ì‚µ‚È‚¢j
+// ãƒ¬ã‚¤ãƒ¤ç®¡ç†ã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ï¼ˆã‚°ãƒ­ãƒ¼ãƒãƒ«ã«ä½œã‚‰ãªã„ã¨å‹•ä½œã—ãªã„ï¼‰
 const layerManager = new LayerManager();
 
-// ƒŒƒCƒ„ŠÇ—‚ÌƒRƒ“ƒeƒLƒXƒg
+// ãƒ¬ã‚¤ãƒ¤ç®¡ç†ã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
 const LayerContext = createContext();
-// XVŠm”F—p‚ÌƒRƒ“ƒeƒLƒXƒg
+// æ›´æ–°ç¢ºèªç”¨ã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
 const LayerStateCountContext = createContext();
 
-// COPÀŒ»‚Ì‚½‚ß‚ÌReact Context‚Ì—˜—p€”õ‚Ì‚½‚ß‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg
+// COPå®Ÿç¾ã®ãŸã‚ã®React Contextã®åˆ©ç”¨æº–å‚™ã®ãŸã‚ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
 export const LayerProvider = ({children}) => {
     const [layerStateCount, setLayerStateCount] = useState(0);
     const value = {layerStateCount, setLayerStateCount};
@@ -59,7 +59,7 @@ export const LayerProvider = ({children}) => {
     );
 };
 
-// ƒŒƒCƒ„ŠÇ—‚Ìæ“¾
+// ãƒ¬ã‚¤ãƒ¤ç®¡ç†ã®å–å¾—
 export const useLayerManager = () => {
     const {layerStateCount, setLayerStateCount} = useContext(LayerStateCountContext);
     const layerManager = useContext(LayerContext);
@@ -68,7 +68,7 @@ export const useLayerManager = () => {
     return layerManager;
 };
 
-// ƒŒƒCƒ„Šˆ«ó‘Ô‚Ì‚É“®ì‚·‚éuseEffect
+// ãƒ¬ã‚¤ãƒ¤æ´»æ€§çŠ¶æ…‹ã®æ™‚ã«å‹•ä½œã™ã‚‹useEffect
 export const useEffectWithLayer = (callback, layerName, dependencys = undefined) => {
     const layerManager = useLayerManager();
     const newCallback = () => {
@@ -80,7 +80,7 @@ export const useEffectWithLayer = (callback, layerName, dependencys = undefined)
     useEffect(newCallback, [layerManager.layerStateCount]);
 };
 
-// ƒŒƒCƒ„”ñŠˆ«ó‘Ô‚Ì‚É“®ì‚·‚éuseEffect
+// ãƒ¬ã‚¤ãƒ¤éæ´»æ€§çŠ¶æ…‹ã®æ™‚ã«å‹•ä½œã™ã‚‹useEffect
 export const useEffectWithoutLayer = (callback, layerName, dependencys = undefined) => {
     const layerManager = useLayerManager();
     const newCallback = () => {
@@ -92,7 +92,7 @@ export const useEffectWithoutLayer = (callback, layerName, dependencys = undefin
     useEffect(newCallback, [layerManager.layerStateCount]);
 };
 
-// JSX‚Å‚ÌƒŒƒCƒ„‹Lq‚Ì‚½‚ß‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg
+// JSXã§ã®ãƒ¬ã‚¤ãƒ¤è¨˜è¿°ã®ãŸã‚ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
 export const Layer = ({name, children}) => {
     const layerManager = useLayerManager();
 
