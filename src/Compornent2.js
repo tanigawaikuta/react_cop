@@ -15,11 +15,11 @@ const Compornent2 = () => {
     // JSX
     return (
         <div>
-            <Layer name="LayerA">
+            <Layer names={["LayerA"]}>
                 <button disabled>LayerA</button>
                 <button onClick={onClickB}>LayerB</button>
             </Layer>
-            <Layer name="LayerB">
+            <Layer names={["LayerB"]}>
                 <button onClick={onClickA}>LayerA</button>
                 <button disabled>LayerB</button>
             </Layer>
