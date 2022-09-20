@@ -1,111 +1,163 @@
-import { useState, useEffect, useContext, createContext } from "react";
+import React, { useState, useEffect, useLayoutEffect, useContext, createContext, Fragment } from "react";
 
-// レイヤ管理クラス
 class LayerManager {
-    // コンストラクタ
+    //Constructor
     constructor() {
-        // レイヤ状態を保存するためのハッシュマップ
+        // Hash map for storing the state of layers
         this.layerMap = new Map();
-        // 更新確認用
+        // To check update on de/activation
         this.layerStateCount = 0;
-        this.setLayerStateCount = null;
+        this.setLayerStateCount = null; 
     }
-    // レイヤ活性化
+
+    // Layer activation
     activateLayer(layerName) {
-        if (!this.layerMap.has(layerName)) {
+        if(!this.layerMap.has(layerName)) {
             this.layerMap.set(layerName, false);
         }
-        // アクティベート
+        // Activation
         this.layerMap.set(layerName, true);
-        // 更新確認用
+        // For checking update on activation
         this.setLayerStateCount(count => count + 1);
     }
-    // レイヤ非活性化
+
+    // Layer deactivation
     deactivateLayer(layerName) {
-        if (!this.layerMap.has(layerName)) {
+        if(!this.layerMap.has(layerName)) {
             this.layerMap.set(layerName, false);
         }
-        // ディアクティベート
+        // Deactivation
         this.layerMap.set(layerName, false);
-        // 更新確認用
-        this.setLayerStateCount(count => count + 1);
+        // For checking update on deactivation
+        this.setLayerStateCount(count => count + 1); 
     }
-    // レイヤが活性であるかどうかを取得
+
+    // Get if the layer is activated
     getLayerState(layerName) {
-        if (!this.layerMap.has(layerName)) {
+        if(!this.layerMap.has(layerName)) {
             this.layerMap.set(layerName, false);
         }
         return this.layerMap.get(layerName);
     }
 };
 
-// レイヤ管理のコンテキスト
+// Context for managing layers
 const LayerContext = createContext();
-// 更新確認用のコンテキスト
-const LayerStateCountContext = createContext();
+// Context for checking update on de/activation
+const layerStateCountContext = createContext();
 
-// COP実現のためのReact Contextの利用準備のためのコンポーネント
+// Component for preparing the use of Context to realize COP
 export const LayerProvider = ({children}) => {
-    const [layerManager] = useState(new LayerManager());
+    //! useReducer may be efficient on this two useState
+    const [layerManager] = useState (new LayerManager());
     const [layerStateCount, setLayerStateCount] = useState(0);
     const value = {layerStateCount, setLayerStateCount};
+
     return (
         <LayerContext.Provider value={layerManager}>
-            <LayerStateCountContext.Provider value={value}>
+            <layerStateCountContext.Provider value={value}>
                 {children}
-            </LayerStateCountContext.Provider>
+            </layerStateCountContext.Provider>
         </LayerContext.Provider>
     );
 };
 
-// レイヤ管理の取得
+
+// This fuction finds all active layers in the hash map and return an array of layernames
+const getActiveLayers = (layerManager) => {
+    const activeLayers = [];
+
+    //* find active layers
+    layerManager.layerMap.forEach((state, name) => {
+        if(state) activeLayers.push(name);
+    });
+    
+    return activeLayers;
+}
+
+// This function compares all elements which are not in order in two arrays and return true if the arrays are same 
+const equals = (a, b) => {
+    if (a.length !== b.length) {
+        return false;
+    }
+
+    var seen = {};
+    a.forEach(function(v) {
+        var key = (typeof v) + v;
+        if (!seen[key]) {
+            seen[key] = 0;
+        }
+        seen[key] += 1;
+    });
+
+    return b.every(function(v) {
+        var key = (typeof v) + v;
+        if (seen[key]) {
+            seen[key] -= 1;
+            return true;
+        }
+    });
+}
+// Managing LayerManager
+// This function returns layerManager whihch contains layerStateCount and setLayerStateCount at runtime
 export const useLayerManager = () => {
-    const {layerStateCount, setLayerStateCount} = useContext(LayerStateCountContext);
+    const {layerStateCount, setLayerStateCount} = useContext(layerStateCountContext);
     const layerManager = useContext(LayerContext);
     layerManager.layerStateCount = layerStateCount;
     layerManager.setLayerStateCount = setLayerStateCount;
     return layerManager;
 };
 
-// レイヤ活性状態の時に動作するuseEffect
-export const useEffectWithLayer = (callback, layerName, dependencys = undefined) => {
+
+// useEffect for when the layer is active
+export const useEffectWithLayer = (callback, layerNames, dependencys = undefined) => {
     const layerManager = useLayerManager();
+    const activeLayers = getActiveLayers(layerManager);
+    const areLayersActive = equals(layerNames, activeLayers);
     const newCallback = () => {
-        if (layerManager.getLayerState(layerName)) {
+        if(areLayersActive) {
             callback();
         }
     };
+
     useEffect(newCallback, dependencys);
     useEffect(newCallback, [layerManager.layerStateCount]);
+    // useLayoutEffect(newCallback, dependencys);
+    // useLayoutEffect(newCallback, [layerManager.layerStateCount]);
 };
 
-// レイヤ非活性状態の時に動作するuseEffect
-export const useEffectWithoutLayer = (callback, layerName, dependencys = undefined) => {
+// useEffect for when the layer is deactive
+export const useEffectWithoutLayer = (callback, layerNames, dependencys = undefined) => {
     const layerManager = useLayerManager();
+    const activeLayers = getActiveLayers(layerManager);
+    const areLayersActive = equals(layerNames, activeLayers);
     const newCallback = () => {
-        if (!layerManager.getLayerState(layerName)) {
+        if(!areLayersActive) {
             callback();
         }
     };
-    useEffect(newCallback, dependencys);
-    useEffect(newCallback, [layerManager.layerStateCount]);
+        useEffect(newCallback, dependencys);
+        useEffect(newCallback, [layerManager.layerStateCount]);
 };
 
-// JSXでのレイヤ記述のためのコンポーネント
-export const Layer = ({name, children}) => {
-    const layerManager = useLayerManager();
 
-    if (layerManager.getLayerState(name)) {
-        return (
-            <div>
+
+export const Layer = ({names, children}) => {
+    const layerManager = useLayerManager();
+    const activeLayers = getActiveLayers(layerManager);
+    const areLayersActive = equals(names, activeLayers);
+
+    if(areLayersActive) {
+        return(
+            <Fragment>
                 {children}
-            </div>
+            </Fragment>
         );
     }
     else {
-        return (
-            <div>
-            </div>
+        return(
+            <Fragment></Fragment>
         );
     }
 };
+
