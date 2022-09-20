@@ -2,7 +2,7 @@
 
 Experimental programs for realizing Context-oriented Programming(COP) on React project.
 
-## Operation Instructions
+## Operation Instruction
 
 You can run Samples following command:
 
