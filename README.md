@@ -1,7 +1,9 @@
 # React COP
+
 Experimental programs for realizing Context-oriented Programming(COP) on React project.
 
-# Operation Instructions
+## Operation Instructions
+
 You can run Samples following command:
 
 ```
@@ -9,9 +11,10 @@ $ npm install
 $ npm start
 ```
 
-# ReactCOP Methods
+## ReactCOP Methods
 
 ### LayerManager
+
 LayerManager provides the functionality of managing layer definitions and activation information.
 Layer information is stored in the app as a hash map with layer names as keys and activation states as values.
 Field variables contains layerStateCount and its setter to detect activation/deactivation calls on React.
@@ -30,6 +33,7 @@ Returns the activate information as a true/false based on the layer name passed 
 
 
 ### LayerProvider
+
 This method is used to set a range of contextual information and layers deployment. This method uses a higher-order component(HOC) structure, one of react design patterns. HOC is a method that takes a component and returns a new component. LayerProvider takes child components and wraps them with two React context providers.
 The first one, named LayerContext, provides layer information which contains layer names and layer's activation status expressed by boolean. With this context provider, child components are able to share the layer names and the status. The second one is called layerStatusCountContext, and it provides an useState's value and its setter. This context is only used in activateLayer and deactivateLayer methods. When the layer's activation status is manipulated, it adds 1 to the useState's value, and the updating on the value triggers re-rendering of components reflecting activated layers.
 Define `LayerManager` and `layerStateCount` with useState to wrap children. 
@@ -47,7 +51,8 @@ root.render(
 );
 ```
 
-### useLayerManager   *** ADD MORE EXPLANATION ****
+### useLayerManager   
+
 Call before using `LayerManager` to activate/deactivate layers or check layer activation.
 Store the values when called in layerStateCount and setLayerStateCount, and integrate layerStateCount and its setter into `LayerManager`.
 
@@ -61,6 +66,7 @@ useEffect(() => {
 
 
 ### useEffectWithLayer
+
 `useEffect` corresponding to the layer.  callback is executed only when the layer given in the second argument is active. The third argument is the same as the second argument of `useEffect`. There is also a deactivated version of `useEffectWithoutLayer`.
 
 ```
@@ -83,6 +89,7 @@ useEffectWithLayer(() => {
 
 
 ### Layer Component
+
 A method for reflecting components and tags according to the layer activation status within JSX.
 In the JSX description, the part enclosed by the `Layer` component is valid only when the layer specified by the `name` attribute is active.
 
