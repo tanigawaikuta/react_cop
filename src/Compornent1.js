@@ -22,7 +22,7 @@ const Compornent1 = () => {
             // ベース処理の呼び出し
             onClickBase();
         };
-    }, "LayerA", []);
+    }, ["LayerA"], []);
 
     // レイヤB活性時の処理
     useEffectWithLayer(() => {
@@ -34,19 +34,19 @@ const Compornent1 = () => {
             // ベース処理の呼び出し
             onClickBase();
         };
-    }, "LayerB", []);
+    }, ["LayerB"], []);
 
     // レイヤA活性時かつcountが変化した際の処理
     useEffectWithLayer(() => {
         const result = count - countB;
         setCountA(result);
-    }, "LayerA", [count]);
+    }, ["LayerA"], [count]);
 
     // レイヤB活性時かつcountが変化した際の処理
     useEffectWithLayer(() => {
         const result = count - countA;
         setCountB(result);
-    }, "LayerB", [count]);
+    }, ["LayerB"], [count]);
 
     // JSX
     return (
