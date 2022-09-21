@@ -5,9 +5,9 @@ import { useLayerManager } from "./COPLib";
 
 function App() {
   const layerManager = useLayerManager();
-  // コンポーネントの初期化
+  // initializing layer and component
   useEffect(() => {
-    // 初めにレイヤAをアクティブにする
+    // Activates layer A at init
     layerManager.activateLayer("LayerA");
   }, []);
 

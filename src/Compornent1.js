@@ -8,41 +8,41 @@ const Compornent1 = () => {
     const [countA, setCountA] = useState(0);
     const [countB, setCountB] = useState(0);
 
-    // ボタンクリック時のベース処理（全レイヤ非活性時の処理）
+    // Base process on button click（when all layers are deactivated）
     const onClickBase = () => { setCount(ct => ct + 1); };
     const onClick = useRef(() => { onClickBase(); });
 
-    // レイヤA活性時の処理
+    // A process when layer A is active.
     useEffectWithLayer(() => {
-        // 状態の書き換え
+        // updates state
         setButtonLabel("A");
-        // onClickの書き換え
+        // updates onClick
         onClick.current = () => {
             setText(preText => preText + "A");
-            // ベース処理の呼び出し
+            // calls base process
             onClickBase();
         };
     }, ["LayerA"], []);
 
-    // レイヤB活性時の処理
+    // A process when layer is active
     useEffectWithLayer(() => {
-        // 状態の書き換え
+        // updates state
         setButtonLabel("B");
-        // onClickの書き換え
+        // updates onClick
         onClick.current = () => {
             setText(preText => preText + "B");
-            // ベース処理の呼び出し
+            // calls base process
             onClickBase();
         };
     }, ["LayerB"], []);
 
-    // レイヤA活性時かつcountが変化した際の処理
+    // A process when count is changed while layer A is active
     useEffectWithLayer(() => {
         const result = count - countB;
         setCountA(result);
     }, ["LayerA"], [count]);
 
-    // レイヤB活性時かつcountが変化した際の処理
+    // A process when count is changed while layer B is active
     useEffectWithLayer(() => {
         const result = count - countA;
         setCountB(result);
