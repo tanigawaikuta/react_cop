@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect, useContext, createContext, Fragment } from "react";
+import React, { useState, useEffect, useLayoutEffect, useContext, createContext, Component, Fragment } from "react";
 
 class LayerManager {
     //Constructor
@@ -7,7 +7,8 @@ class LayerManager {
         this.layerMap = new Map();
         // To check update on de/activation
         this.layerStateCount = 0;
-        this.setLayerStateCount = null; 
+        this.setLayerStateCount = null;
+        this.layerPrams = {}; 
     }
 
     // Layer activation
@@ -39,12 +40,77 @@ class LayerManager {
         }
         return this.layerMap.get(layerName);
     }
+
 };
 
 // Context for managing layers
 const LayerContext = createContext();
 // Context for checking update on de/activation
 const layerStateCountContext = createContext();
+
+let calledCount = -1;
+
+export const useLayerPrams = (initialValue, layers) => {
+    const layerManager = useLayerManager();
+    const activeLayer = getActiveLayers(layerManager);
+    const [count, setCount] = useState(0);
+    const [value, setValue] = useState(0);
+    let currentCount; 
+    
+    const init = () => {
+        let temporaryLayerPrams = {};
+        console.log(`init ____ ${calledCount}`)
+        if(temporaryLayerPrams[calledCount] === undefined) temporaryLayerPrams[calledCount] = {};
+        if(layerManager.layerPrams[calledCount] === undefined) layerManager.layerPrams[calledCount] = {};
+        for(const layer of layers) {
+            if(temporaryLayerPrams[calledCount][layer] === undefined) {
+                Object.assign(temporaryLayerPrams, {[calledCount]: {[layer]: initialValue}});
+            };
+            Object.assign(layerManager.layerPrams[calledCount], temporaryLayerPrams[calledCount]);
+        }
+    };
+
+    const updateLayerPrams = (value, count, currentActiveLayer) => {
+        layerManager.layerPrams[count][currentActiveLayer] = value;
+    };
+
+    const getLayerPrams = (count, currentActiveLayer) => {
+        setValue(layerManager.layerPrams[count][currentActiveLayer]);
+        resetCount();
+    };
+    
+    const resetCount = () => {
+        calledCount = -1;
+    }
+
+    const setLayerPramsWithSpecificCount = (value) => {
+        console.log(`THIS IS CURRENT VALUE _______ ${currentCount}`)
+        const currentActiveLayers = getActiveLayers(layerManager)
+        console.log(currentActiveLayers)
+        updateLayerPrams(value, currentCount, currentActiveLayers);
+        getLayerPrams(currentCount, currentActiveLayers);
+        // setCount(currentCount);
+    };
+
+    const getLayerPramsWithSprecificCount = () => {
+        const currentActiveLayer = getActiveLayers(layerManager);
+        return layerManager.layerPrams[count][currentActiveLayer]
+    }
+
+
+    useEffect(() => {
+        getLayerPrams(currentCount);
+        resetCount();
+    });
+
+    calledCount++;
+    currentCount = calledCount;
+    if(layerManager.layerPrams[calledCount] === undefined) init();
+    console.log(layerManager.layerPrams)
+    console.log(`_______THIS IS CALLED COUNT __________${calledCount}`)
+    return [getLayerPramsWithSprecificCount, setLayerPramsWithSpecificCount];
+    
+}
 
 // Component for preparing the use of Context to realize COP
 export const LayerProvider = ({children}) => {
@@ -62,9 +128,20 @@ export const LayerProvider = ({children}) => {
     );
 };
 
+// Managing LayerManager
+// This function returns layerManager whihch contains layerStateCount and setLayerStateCount at runtime
+export const useLayerManager = () => {
+
+    const {layerStateCount, setLayerStateCount} = useContext(layerStateCountContext);
+    const layerManager = useContext(LayerContext);
+    layerManager.layerStateCount = layerStateCount;
+    layerManager.setLayerStateCount = setLayerStateCount;
+    return layerManager;
+};
+
 
 // This fuction finds all active layers in the hash map and return an array of layernames
-const getActiveLayers = (layerManager) => {
+export const getActiveLayers = (layerManager) => {
     const activeLayers = [];
 
     //* find active layers
@@ -75,79 +152,21 @@ const getActiveLayers = (layerManager) => {
     return activeLayers;
 }
 
-// This function compares all elements which are not in order in two arrays and return true if the arrays are same 
-const equals = (a, b) => {
-    if (a.length !== b.length) {
-        return false;
-    }
-
-    var seen = {};
-    a.forEach(function(v) {
-        var key = (typeof v) + v;
-        if (!seen[key]) {
-            seen[key] = 0;
-        }
-        seen[key] += 1;
-    });
-
-    return b.every(function(v) {
-        var key = (typeof v) + v;
-        if (seen[key]) {
-            seen[key] -= 1;
-            return true;
-        }
-    });
-}
-// Managing LayerManager
-// This function returns layerManager whihch contains layerStateCount and setLayerStateCount at runtime
-export const useLayerManager = () => {
-    const {layerStateCount, setLayerStateCount} = useContext(layerStateCountContext);
-    const layerManager = useContext(LayerContext);
-    layerManager.layerStateCount = layerStateCount;
-    layerManager.setLayerStateCount = setLayerStateCount;
-    return layerManager;
-};
-
-
 // useEffect for when the layer is active
-export const useEffectWithLayer = (callback, layerNames, dependencys = undefined) => {
+export const useEffectWithLayer = (callback, condition, dependencys = undefined) => {
     const layerManager = useLayerManager();
-    const activeLayers = getActiveLayers(layerManager);
-    const areLayersActive = equals(layerNames, activeLayers);
     const newCallback = () => {
-        if(areLayersActive) {
+        if(condition) {
             callback();
         }
     };
 
     useEffect(newCallback, dependencys);
     useEffect(newCallback, [layerManager.layerStateCount]);
-    // useLayoutEffect(newCallback, dependencys);
-    // useLayoutEffect(newCallback, [layerManager.layerStateCount]);
 };
 
-// useEffect for when the layer is deactive
-export const useEffectWithoutLayer = (callback, layerNames, dependencys = undefined) => {
-    const layerManager = useLayerManager();
-    const activeLayers = getActiveLayers(layerManager);
-    const areLayersActive = equals(layerNames, activeLayers);
-    const newCallback = () => {
-        if(!areLayersActive) {
-            callback();
-        }
-    };
-        useEffect(newCallback, dependencys);
-        useEffect(newCallback, [layerManager.layerStateCount]);
-};
-
-
-
-export const Layer = ({names, children}) => {
-    const layerManager = useLayerManager();
-    const activeLayers = getActiveLayers(layerManager);
-    const areLayersActive = equals(names, activeLayers);
-
-    if(areLayersActive) {
+export const Layer = ({condition, children}) => { 
+    if(condition) {
         return(
             <Fragment>
                 {children}
@@ -160,4 +179,3 @@ export const Layer = ({names, children}) => {
         );
     }
 };
-
