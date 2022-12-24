@@ -55,20 +55,20 @@ export const useLayerPrams = (initialValue, layers) => {
     const activeLayer = getActiveLayers(layerManager);
     const [count, setCount] = useState(0);
     const [value, setValue] = useState(0);
-    let currentCount, temporaryLayerPrams = {}; 
+    let currentCount; 
     
     const init = () => {
+        let temporaryLayerPrams = {};
         console.log(`init ____ ${calledCount}`)
         if(temporaryLayerPrams[calledCount] === undefined) temporaryLayerPrams[calledCount] = {};
         if(layerManager.layerPrams[calledCount] === undefined) layerManager.layerPrams[calledCount] = {};
-        for(let layer of layers) {
+        for(const layer of layers) {
             if(temporaryLayerPrams[calledCount][layer] === undefined) {
                 Object.assign(temporaryLayerPrams, {[calledCount]: {[layer]: initialValue}});
             };
             Object.assign(layerManager.layerPrams[calledCount], temporaryLayerPrams[calledCount]);
         }
     };
-
 
     const updateLayerPrams = (value, count, currentActiveLayer) => {
         layerManager.layerPrams[count][currentActiveLayer] = value;
@@ -103,12 +103,6 @@ export const useLayerPrams = (initialValue, layers) => {
         resetCount();
     });
 
-
-    // useEffect(() => {
-    //     setValue(layerManager.layerPrams[count][activeLayer])
-    // }, [count]);
-
-
     calledCount++;
     currentCount = calledCount;
     if(layerManager.layerPrams[calledCount] === undefined) init();
@@ -117,12 +111,6 @@ export const useLayerPrams = (initialValue, layers) => {
     return [getLayerPramsWithSprecificCount, setLayerPramsWithSpecificCount];
     
 }
-
-
-
-
-
-
 
 // Component for preparing the use of Context to realize COP
 export const LayerProvider = ({children}) => {
@@ -164,30 +152,6 @@ export const getActiveLayers = (layerManager) => {
     return activeLayers;
 }
 
-// This function compares all elements which are not in order in two arrays and return true if the arrays are same 
-const equals = (a, b) => {
-    if (a.length !== b.length) {
-        return false;
-    }
-
-    var seen = {};
-    a.forEach(function(v) {
-        var key = (typeof v) + v;
-        if (!seen[key]) {
-            seen[key] = 0;
-        }
-        seen[key] += 1;
-    });
-
-    return b.every(function(v) {
-        var key = (typeof v) + v;
-        if (seen[key]) {
-            seen[key] -= 1;
-            return true;
-        }
-    });
-}
-
 // useEffect for when the layer is active
 export const useEffectWithLayer = (callback, condition, dependencys = undefined) => {
     const layerManager = useLayerManager();
@@ -200,9 +164,6 @@ export const useEffectWithLayer = (callback, condition, dependencys = undefined)
     useEffect(newCallback, dependencys);
     useEffect(newCallback, [layerManager.layerStateCount]);
 };
-
-
-
 
 export const Layer = ({condition, children}) => { 
     if(condition) {
@@ -218,38 +179,3 @@ export const Layer = ({condition, children}) => {
         );
     }
 };
-
-export const Layer2 = ({parentName, layerDetail}) => {    
-    //* find active layers
-    const [layerManager, activeLayers] = getActiveLayers(layerManager);
-
-    //* return react component with details depends on active layer and parent name
-    const baseLayer = Object.keys(layerDetail)[0]
-    const [currentActiveLayer, setCurrentActiveLayer] = useState(baseLayer);
-    const activeComponents = [[baseLayer, layerDetail[currentActiveLayer][parentName].child]];
-
-    useLayoutEffect(()=>{
-        activeLayers.forEach((activeLayer) => {
-            setCurrentActiveLayer(activeLayer);
-            activeComponents.push([activeLayer, layerDetail[activeLayer][parentName].child]);
-        })
-    }, [layerManager.layerStateCount]);
-
-
-    console.log(activeComponents);
-    for(let index in activeComponents) {
-        const [activeLayerName, ActiveComponent] = activeComponents[index];
-        console.log(activeComponents[index]);
-        console.log(ActiveComponent)
-        return (
-            <ActiveComponent />
-            // <Layer name={activeLayerName}>
-            //     <ActiveComponent />
-            // </Layer>
-        )
-    }
-    
-};
-
-
-
