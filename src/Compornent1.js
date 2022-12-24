@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useEffectWithLayer } from "./COPLib";
+import { useEffectWithLayer, useLayerManager } from "./COPLib";
 
 const Compornent1 = () => {
     const [text, setText] = useState("");
@@ -7,6 +7,7 @@ const Compornent1 = () => {
     const [count, setCount] = useState(0);
     const [countA, setCountA] = useState(0);
     const [countB, setCountB] = useState(0);
+    const layerManager = useLayerManager();
 
     // Base process on button click（when all layers are deactivated）
     const onClickBase = () => { setCount(ct => ct + 1); };
@@ -22,7 +23,7 @@ const Compornent1 = () => {
             // calls base process
             onClickBase();
         };
-    }, ["LayerA"], []);
+    }, layerManager.getLayerState("LayerA"), []);
 
     // A process when layer is active
     useEffectWithLayer(() => {
@@ -34,19 +35,19 @@ const Compornent1 = () => {
             // calls base process
             onClickBase();
         };
-    }, ["LayerB"], []);
+    }, layerManager.getLayerState("LayerB"), []);
 
     // A process when count is changed while layer A is active
     useEffectWithLayer(() => {
         const result = count - countB;
         setCountA(result);
-    }, ["LayerA"], [count]);
+    }, layerManager.getLayerState("LayerA"), [count]);
 
     // A process when count is changed while layer B is active
     useEffectWithLayer(() => {
         const result = count - countA;
         setCountB(result);
-    }, ["LayerB"], [count]);
+    }, layerManager.getLayerState("LayerB"), [count]);
 
     // JSX
     return (
