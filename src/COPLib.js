@@ -91,6 +91,7 @@ export const useLayerManager = () => {
 
 export const useLayerPrams = (initialValue, layers) => {
     const [layerPrams] = useState({});
+    const [count, setCount] = useState(0);
     const layerManager = useLayerManager();
 
     for (const layer of layers) {
@@ -130,6 +131,9 @@ export const useLayerPrams = (initialValue, layers) => {
                 }
             }
         }
+
+        // re-render
+        setCount((ct) => ct + 1);
     };
 
     return [getLayerPrams, setLayerPrams];
