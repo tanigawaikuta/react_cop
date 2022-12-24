@@ -1,60 +1,27 @@
-import { useState, useRef } from "react";
-import { useEffectWithLayer, useLayerManager } from "./COPLib";
+import { useState, useEffect } from "react";
+import { useLayerPrams } from "./COPLib";
 
 const Compornent1 = () => {
     const [text, setText] = useState("");
-    const [buttonLabel, setButtonLabel] = useState("");
-    const [count, setCount] = useState(0);
-    const [countA, setCountA] = useState(0);
-    const [countB, setCountB] = useState(0);
-    const layerManager = useLayerManager();
+    const [getButtonLabel, setButtonLabel] = useLayerPrams("", ["LayerA", "LayerB"]);
+    const [getCount, setCount] = useLayerPrams(0, ["LayerA", "LayerB"]);
 
-    // Base process on button click（when all layers are deactivated）
-    const onClickBase = () => { setCount(ct => ct + 1); };
-    const onClick = useRef(() => { onClickBase(); });
+    useEffect(() => {
+        setButtonLabel("A", "LayerA");
+        setButtonLabel("B", "LayerB");
+    }, []);
 
-    // A process when layer A is active.
-    useEffectWithLayer(() => {
-        // updates state
-        setButtonLabel("A");
-        // updates onClick
-        onClick.current = () => {
-            setText(preText => preText + "A");
-            // calls base process
-            onClickBase();
-        };
-    }, layerManager.getLayerState("LayerA"), []);
-
-    // A process when layer is active
-    useEffectWithLayer(() => {
-        // updates state
-        setButtonLabel("B");
-        // updates onClick
-        onClick.current = () => {
-            setText(preText => preText + "B");
-            // calls base process
-            onClickBase();
-        };
-    }, layerManager.getLayerState("LayerB"), []);
-
-    // A process when count is changed while layer A is active
-    useEffectWithLayer(() => {
-        const result = count - countB;
-        setCountA(result);
-    }, layerManager.getLayerState("LayerA"), [count]);
-
-    // A process when count is changed while layer B is active
-    useEffectWithLayer(() => {
-        const result = count - countA;
-        setCountB(result);
-    }, layerManager.getLayerState("LayerB"), [count]);
+    const onClick = () => {
+        setCount((ct) => ct + 1);
+        setText((pre) => pre + getButtonLabel());
+    };
 
     // JSX
     return (
         <div>
-            <p>CountA: {countA}</p>
-            <p>CountB: {countB}</p>
-            <button onClick={onClick.current}>{buttonLabel}</button>
+            <p>CountA: {getCount("LayerA")}</p>
+            <p>CountB: {getCount("LayerB")}</p>
+            <button onClick={onClick}>{getButtonLabel()}</button>
             <b> {text}</b>
         </div>
     );

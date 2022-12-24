@@ -2,6 +2,7 @@ import { useLayerManager, Layer } from "./COPLib";
 
 const Compornent2 = () => {
     const layerManager = useLayerManager();
+    const layerState = layerManager.getLayerState();
 
     const onClickA = () => {
         layerManager.activateLayer("LayerA");
@@ -15,11 +16,11 @@ const Compornent2 = () => {
     // JSX
     return (
         <div>
-            <Layer condition={layerManager.getLayerState("LayerA")}>
+            <Layer condition={layerState.LayerA}>
                 <button disabled>LayerA</button>
                 <button onClick={onClickB}>LayerB</button>
             </Layer>
-            <Layer condition={layerManager.getLayerState("LayerB")}>
+            <Layer condition={layerState.LayerB}>
                 <button onClick={onClickA}>LayerA</button>
                 <button disabled>LayerB</button>
             </Layer>
