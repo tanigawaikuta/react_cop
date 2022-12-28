@@ -5,7 +5,7 @@ const CalculationPanel = () => {
     const [numText1, setNumText1] = useState("0");
     const [numText2, setNumText2] = useState("0");
     const [operatorText, setOperatorText] = useState("+");
-    const [result, setResult] = useState("aho");
+    const [result, setResult] = useState("0");
     const [getInputRegExp, setInputRegExp] = useLayerPrams(undefined, ["Float", "Integer"]);
     const refInputNumText1 = useRef();
     const refInputNumText2 = useRef();
