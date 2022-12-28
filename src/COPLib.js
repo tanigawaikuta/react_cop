@@ -91,7 +91,7 @@ export const useLayerManager = () => {
 
 export const useLayerPrams = (initialValue, layers) => {
     const [layerPrams] = useState({});
-    const [count, setCount] = useState(0);
+    const [, setCount] = useState(0);
     const layerManager = useLayerManager();
 
     for (const layer of layers) {
@@ -116,7 +116,7 @@ export const useLayerPrams = (initialValue, layers) => {
     };
 
     const setLayerPrams = (newValueOrFunc, layerName = undefined) => {
-        let currentValue = getLayerPrams(layerName);
+        const currentValue = getLayerPrams(layerName);
         let newValue = newValueOrFunc;
         while ((typeof newValue) == "function") {
             newValue = newValueOrFunc(currentValue);
@@ -140,16 +140,17 @@ export const useLayerPrams = (initialValue, layers) => {
 }
 
 // useEffect for when the layer is active
-export const useEffectWithLayer = (callback, condition, dependencys = undefined) => {
+export const useEffectWithLayer = (callback, condition, dependencys = []) => {
     const layerManager = useLayerManager();
+    const count = layerManager.getLayerStateCount();
+    const newDependencys = [count].concat(dependencys);
     const newCallback = () => {
         if(condition) {
             callback();
         }
     };
 
-    useEffect(newCallback, dependencys);
-    useEffect(newCallback, [layerManager.getLayerStateCount()]);
+    useEffect(newCallback, newDependencys);
 };
 
 export const Layer = ({condition, children}) => { 

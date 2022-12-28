@@ -1,6 +1,6 @@
-import { useLayerManager, Layer } from "./COPLib";
+import { useLayerManager, Layer } from "../COPLib";
 
-const Compornent2 = () => {
+const LayerSwitchingButton = () => {
     const layerManager = useLayerManager();
     const layerState = layerManager.getLayerState();
 
@@ -16,11 +16,11 @@ const Compornent2 = () => {
     // JSX
     return (
         <div>
-            <Layer condition={layerState.LayerA}>
+            <Layer condition={layerState.LayerA && !layerState.LayerB}>
                 <button disabled>LayerA</button>
                 <button onClick={onClickB}>LayerB</button>
             </Layer>
-            <Layer condition={layerState.LayerB}>
+            <Layer condition={layerState.LayerB && !layerState.LayerA}>
                 <button onClick={onClickA}>LayerA</button>
                 <button disabled>LayerB</button>
             </Layer>
@@ -28,4 +28,4 @@ const Compornent2 = () => {
     );
 };
 
-export default Compornent2;
+export default LayerSwitchingButton;

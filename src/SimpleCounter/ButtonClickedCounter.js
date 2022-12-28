@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useLayerPrams } from "./COPLib";
+import { useLayerPrams } from "../COPLib";
 
-const Compornent1 = () => {
-    const [getText, setText] = useLayerPrams("", ["LayerA", "LayerB"]);
+const ButtonClickedCounter = () => {
+    const [text, setText] = useState("");
     const [getButtonLabel, setButtonLabel] = useLayerPrams("", ["LayerA", "LayerB"]);
     const [getCount, setCount] = useLayerPrams(0, ["LayerA", "LayerB"]);
 
@@ -22,9 +22,9 @@ const Compornent1 = () => {
             <p>CountA: {getCount("LayerA")}</p>
             <p>CountB: {getCount("LayerB")}</p>
             <button onClick={onClick}>{getButtonLabel()}</button>
-            <b> {getText()}</b>
+            <b> {text}</b>
         </div>
     );
 };
 
-export default Compornent1;
+export default ButtonClickedCounter;
