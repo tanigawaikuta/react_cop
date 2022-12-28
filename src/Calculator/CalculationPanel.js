@@ -22,8 +22,8 @@ const CalculationPanel = () => {
 
     // Calculate expression when numbers or operator are changed
     useEffect(() => {
-        const exp = numText1 + operatorText + numText2;
-        const expResult = Function("return (" + exp + ");")();
+        const exp = "return (" + numText1 + operatorText + numText2 + ");";
+        const expResult = Function(exp)();
         setResult(expResult.toString());
     }, [numText1, numText2, operatorText]);
 
@@ -66,9 +66,9 @@ const CalculationPanel = () => {
     // JSX
     return (
         <div>
-            <input ref={refInputNumText1} name="0" type="text" defaultValue={numText1} onInput={onInput} />
+            <input ref={refInputNumText1} name="0" type="text" defaultValue={numText1} onInput={onInput} style={{width: 100}} />
             <font> </font>
-            <select ref={refSelectOperator} onChange={(e) => setOperatorText(e.target.value)}>
+            <select ref={refSelectOperator} onChange={(e) => setOperatorText(e.target.value)} style={{width: 40}}>
                 <option value="+">+</option>
                 <option value="-">-</option>
                 <option value="*">*</option>
@@ -78,10 +78,10 @@ const CalculationPanel = () => {
                 </Layer>
             </select>
             <font> </font>
-            <input ref={refInputNumText2} name="1" type="text" defaultValue={numText2} onInput={onInput} />
+            <input ref={refInputNumText2} name="1" type="text" defaultValue={numText2} onInput={onInput} style={{width: 100}} />
             <br />
             <b>Result: </b>
-            <input name="result" type="text" value={result} readOnly={true} />
+            <input name="result" type="text" value={result} readOnly={true} style={{width: 200}} />
         </div>
     );
 };
