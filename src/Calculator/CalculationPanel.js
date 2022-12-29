@@ -56,7 +56,6 @@ const CalculationPanel = () => {
         const str = e.target.value;
         const id = Number(e.target.name);
         if(str.match(getInputRegExp())) {
-            str.match()
             texts[id].setter(str);
         } else {
             e.target.value = texts[id].value;
