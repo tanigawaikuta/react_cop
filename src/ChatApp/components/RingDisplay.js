@@ -12,7 +12,7 @@ function RingDisplay({ className }) {
                 dispatch({ type: "CALL" })    
             }}>Accept Call</button>
         </div>
-    )
-}
+    );
+};
 
 export default RingDisplay;

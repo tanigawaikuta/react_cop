@@ -28,7 +28,7 @@ function ChatScreen() {
             </Layer>
 
         </div>
-    )
-}
+    );
+};
 
 export default ChatScreen

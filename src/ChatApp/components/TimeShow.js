@@ -15,7 +15,7 @@ function TimeShow() {
         <div className='time-cmp'>
             <p>Time: {date.toLocaleTimeString()}</p>
         </div>
-    )
-}
+    );
+};
 
 export default TimeShow;

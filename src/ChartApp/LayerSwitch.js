@@ -17,7 +17,7 @@ function LayerSwitch() {
         <p>Change layer to </p>
         <button onClick={() => setIsLayerAPPLE(!islayerAPPLE)}>{islayerAPPLE?"TESLA":"APPLE"}</button>
     </div>
-  )
-}
+  );
+};
 
 export default LayerSwitch

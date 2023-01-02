@@ -43,6 +43,6 @@ function Chart ({ getData }) {
             }
         </div>
     );
-}
+};
 
 export default Chart;

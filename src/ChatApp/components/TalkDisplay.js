@@ -9,7 +9,7 @@ function TalkDisplay({ className }) {
             <div>Talking to {state.talker}</div>
             <button onClick={() => dispatch({ type: "TALK" })}>End Call</button>
         </div>
-    )
-}
+    );
+};
 
 export default TalkDisplay;

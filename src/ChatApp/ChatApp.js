@@ -12,8 +12,8 @@ const reducer = (state, action) => {
             return { isRinging: state.isRinging, isTalking: !state.isTalking, talker: state.caller, caller: state.caller };
         default:
             return state;
-    }
-}
+    };
+};
 
 
 function ChatApp() {
@@ -27,6 +27,6 @@ function ChatApp() {
       </CallState.Provider>
     </div>
   );
-}
+};
 
 export default ChatApp;

@@ -3,7 +3,7 @@ function CmpB({ className, data }) {
         <div className={className}>
             <div>{data} This is Component B</div>
         </div>
-    )
-}
+    );
+};
 
 export default CmpB;

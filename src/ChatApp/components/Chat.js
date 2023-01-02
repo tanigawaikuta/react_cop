@@ -25,7 +25,7 @@ function Chat({ state }) {
             </section>     
         </div>
         
-    )
-}
+    );
+};
 
 export default Chat

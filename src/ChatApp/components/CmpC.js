@@ -3,7 +3,7 @@ function CmpC({ className }) {
         <div className={className}>
             <div>This is Component C</div>
         </div>
-    )
-}
+    );
+};
 
 export default CmpC;

@@ -22,7 +22,7 @@ function Navbar({ state }) {
                 <Notification state={state}/>
             </Layer>
         </div>
-    )
-}
+    );
+};
 
 export default Navbar

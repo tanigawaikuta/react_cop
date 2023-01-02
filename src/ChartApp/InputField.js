@@ -3,7 +3,7 @@ import Papa from "papaparse";
 import { useLayerManager } from "../COPLib";
 
 const InputField = ({ setData }) => {
-    const allowedExtensions = ["csv"];
+    const allowedExtensions = ["text/csv"];
     const layerManager = useLayerManager();
     const [error, setError] = useState("");
     const [file, setFile] = useState(null);
@@ -12,7 +12,7 @@ const InputField = ({ setData }) => {
         setError("");
         if (e.target.files.length) {
             const inputFile = e.target.files[0];
-            const fileExtension = inputFile?.type.split("/")[1];
+            const fileExtension = inputFile?.type;
             if (!allowedExtensions.includes(fileExtension)) {
                 setError("Please input a csv file");
                 return;
@@ -42,7 +42,7 @@ const InputField = ({ setData }) => {
             layerManager.activateLayer("TESLA");    
         }
         setData(data);
-    }
+    };
 
     return (
         <div>
