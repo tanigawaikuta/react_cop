@@ -7,6 +7,8 @@ const SimpleCounterApp = () => {
   const layerManager = useLayerManager();
   // initializing layer and component
   useEffect(() => {
+    // Deactivate layer B at init
+    layerManager.deactivateLayer("LayerB");
     // Activates layer A at init
     layerManager.activateLayer("LayerA");
   }, []);
