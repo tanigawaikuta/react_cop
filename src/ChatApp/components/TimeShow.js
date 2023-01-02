@@ -6,7 +6,7 @@ function TimeShow() {
     useEffect(() => {
         var timer = setInterval(() => setDate(new Date()), 1000 );
 
-        return function cleanup() {
+        return () => {
             clearInterval(timer);
         };
     }, []);

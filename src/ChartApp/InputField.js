@@ -2,38 +2,35 @@ import React, { useState } from "react";
 import Papa from "papaparse";
 import { useLayerManager } from "../COPLib";
 
-const allowedExtensions = ["csv"];
-
-const InputField = (props) => {
-
+const InputField = ({ setData }) => {
+    const allowedExtensions = ["csv"];
     const layerManager = useLayerManager();
-	const [error, setError] = useState("");
-	const [file, setFile] = useState("");
+    const [error, setError] = useState("");
+    const [file, setFile] = useState(null);
 
-	const handleFileChange = (e) => {
-		setError("");
-		if (e.target.files.length) {
-			const inputFile = e.target.files[0];
-			const fileExtension = inputFile?.type.split("/")[1];
-			if (!allowedExtensions.includes(fileExtension)) {
-				setError("Please input a csv file");
-				return;
-			}
+    const handleFileChange = (e) => {
+        setError("");
+        if (e.target.files.length) {
+            const inputFile = e.target.files[0];
+            const fileExtension = inputFile?.type.split("/")[1];
+            if (!allowedExtensions.includes(fileExtension)) {
+                setError("Please input a csv file");
+                return;
+            }
 
-			setFile(inputFile);
-		}
-	};
-	const handleParse = () => {
-		if (!file) return setError("Enter a valid file");
-		const reader = new FileReader();
-		
-		reader.onload = async ({ target }) => {
-			const csv = Papa.parse(target.result, { header: true });
-			const parsedData = csv?.data;
+            setFile(inputFile);
+        }
+    };
+    const handleParse = () => {
+        if (!file) return setError("Enter a valid file");
+        const reader = new FileReader();
+        reader.onload = async ({ target }) => {
+            const csv = Papa.parse(target.result, { header: true });
+            const parsedData = csv?.data;
             await initLayerActivation(file.name, parsedData)
-		};
-		reader.readAsText(file);
-	};
+        };
+        reader.readAsText(file);
+    };
 
     const  initLayerActivation = async (layerName, data) => {
         console.log(layerName);
@@ -44,28 +41,28 @@ const InputField = (props) => {
             layerManager.deactivateLayer("APPLE");
             layerManager.activateLayer("TESLA");    
         }
-        props.setData(data);
+        setData(data);
     }
 
-	return (
-		<div>
-			<label htmlFor="csvInput" style={{ display: "block" }}>
-				Enter CSV File
-			</label>
-			<input
-				onChange={handleFileChange}
-				id="csvInput"
-				name="file"
-				type="File"
-			/>
-			<div>
-				<button onClick={handleParse}>Parse</button>
-			</div>
-			<div style={{ marginTop: "1rem" }}>
-				{error ? error : "Data loaded"}
-			</div>
-		</div>
-	);
+    return (
+        <div>
+            <label htmlFor="csvInput" style={{ display: "block" }}>
+                Enter CSV File
+                </label>
+            <input
+                onChange={handleFileChange}
+                id="csvInput"
+                name="file"
+                type="File"
+            />
+            <div>
+                <button onClick={handleParse}>Parse</button>
+            </div>
+            <div style={{ marginTop: "1rem" }}>
+                {error ? error : "Data loaded"}
+            </div>
+        </div>
+    );
 };
 
 export default InputField;

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLayerManager, Layer, useLayerPrams } from '../../COPLib'
+import { useLayerManager, Layer } from '../../COPLib'
 import TalkDisplay from './TalkDisplay'
 import RingDisplay from './RingDisplay'
 import CmpA from './CmpA'
@@ -9,7 +9,6 @@ import CmpC from './CmpC'
 function ChatScreen() {
     const layerManager = useLayerManager();
     const layerState = layerManager.getLayerState();
-
 
     return (
         <div className='widgets'>
@@ -31,7 +30,5 @@ function ChatScreen() {
         </div>
     )
 }
-
-
 
 export default ChatScreen

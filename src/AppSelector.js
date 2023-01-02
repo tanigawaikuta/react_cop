@@ -4,50 +4,24 @@ import CalculatorApp from "./Calculator/CalculatorApp";
 import ChatApp from "./ChatApp/ChatApp";
 import ChartApp from "./ChartApp/ChartApp";
 
-// const AppSelector = () => {
-//   const [isSelectedApp, setIsSelectedApp] = useState(false);
-//   const [selectedAppName, setSelectedAppName] = useState("SimpleCounter");
-
-//   if (!isSelectedApp) {
-//     return (
-//       <div>
-//         <select onChange={(e) => setSelectedAppName(e.target.value)}>
-//           <option value="SimpleCounter">SimpleCounter</option>
-//           <option value="Calculator">Calculator</option>
-//         </select>
-//         <font> </font>
-//         <button onClick={(e) => setIsSelectedApp(true)}>Select App</button>
-//       </div>
-//     );
-//   } else {
-//     switch (selectedAppName) {
-//       case "SimpleCounter":
-//         return (<SimpleCounterApp />);
-//       case "Calculator":
-//         return (<CalculatorApp />);
-//       default:
-//         return (<div></div>);
-//     }
-//   }
-// }
-const APPS = ['SimpleCounter', 'Calculator', 'ChatApp', 'ChartApp'];
 
 const AppSelector = () => {
+  const Apps = ['SimpleCounter', 'Calculator', 'ChatApp', 'ChartApp'];
   const [app, setApp] = useState("");
 
   return (
     <div>
       <form>
         <label>
-          Example App:
+          Example App: 
             <select
               id="app"
               value={app}
               onChange={(e) => {setApp(e.target.value)}}
             >
-            <option>Select Option ...</option>
+            <option>Select App ...</option>
 
-            {APPS.map((app) => (
+            {Apps.map((app) => (
               <option key={app}>{app}</option>
             ))}
             </select>
