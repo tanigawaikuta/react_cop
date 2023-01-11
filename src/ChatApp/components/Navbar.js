@@ -25,4 +25,4 @@ function Navbar({ state }) {
     );
 };
 
-export default Navbar
+export default Navbar;

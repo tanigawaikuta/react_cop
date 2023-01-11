@@ -7,6 +7,5 @@ function InputField({ dispatch }) {
     </div>
   );
 };
-  
-  export default InputField
-  
+
+export default InputField;

@@ -10,7 +10,7 @@ const InputField = ({ setData }) => {
 
     const handleFileChange = (e) => {
         setError("");
-        if (e.target.files.length) {
+        if (e.target.files.length > 0) {
             const inputFile = e.target.files[0];
             const fileExtension = inputFile?.type;
             if (!allowedExtensions.includes(fileExtension)) {

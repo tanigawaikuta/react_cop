@@ -18,14 +18,13 @@ function Chat({ state }) {
 
     return (
         <div>
-            <div>ChatApp</div> 
+            <div>ChatApp</div>
             <section className='full-display'>
                 <Navbar state={state}/>
                 <ChatScreen />
-            </section>     
+            </section>
         </div>
-        
     );
 };
 
-export default Chat
+export default Chat;

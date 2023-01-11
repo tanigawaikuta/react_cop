@@ -10,7 +10,7 @@ function TimeShow() {
             clearInterval(timer);
         };
     }, []);
-    
+
     return (
         <div className='time-cmp'>
             <p>Time: {date.toLocaleTimeString()}</p>

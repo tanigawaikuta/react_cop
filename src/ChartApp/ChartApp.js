@@ -9,7 +9,7 @@ const App = () => {
 
     return (
         <div>
-	        <p>Download csv files in public folder to run this example</p>
+            <p>Download csv files in public folder to run this example</p>
             <InputField setData={setData} />
             <Chart getData={getData} />
             <LayerSwitch />

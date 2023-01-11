@@ -20,4 +20,4 @@ function LayerSwitch() {
   );
 };
 
-export default LayerSwitch
+export default LayerSwitch;

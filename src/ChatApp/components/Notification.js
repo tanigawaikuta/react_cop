@@ -6,4 +6,4 @@ function Notification({ state }) {
     );
 };
 
-export default Notification
+export default Notification;
