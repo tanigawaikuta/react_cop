@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { useLayerPrams } from "../COPLib";
+import { useEffectWithLayer, useLayerParams } from "../COPLib";
 
 const ButtonClickedCounter = () => {
     const [text, setText] = useState("");
-    const [getButtonLabel, setButtonLabel] = useLayerPrams("", ["LayerA", "LayerB"]);
-    const [getCount, setCount] = useLayerPrams(0, ["LayerA", "LayerB"]);
+    const [getButtonLabel, setButtonLabel] = useLayerParams("", ["LayerA", "LayerB"]);
+    const [getCount, setCount] = useLayerParams(0, ["LayerA", "LayerB"]);
 
     useEffect(() => {
         setButtonLabel("A", "LayerA");

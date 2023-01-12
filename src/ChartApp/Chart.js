@@ -29,7 +29,7 @@ function Chart ({ getData }) {
             let arrayData = [];
             rawData.forEach((obj) => {
                 arrayData.push(Object.values(obj));
-            });   
+            });
             const data = [{data: arrayData}];
             setConvertedData(data);
         }
@@ -37,7 +37,7 @@ function Chart ({ getData }) {
 
     return (
         <div id="chart">
-            {convertedData ? 
+            {convertedData ?
                 <ReactApexChart options={opt} series={convertedData} type="candlestick" height={350} />
                 : <h4>loading data...</h4>
             }

@@ -3,10 +3,11 @@ import SimpleCounterApp from "./SimpleCounter/SimpleCounterApp";
 import CalculatorApp from "./Calculator/CalculatorApp";
 import ChatApp from "./ChatApp/ChatApp";
 import ChartApp from "./ChartApp/ChartApp";
+import ExampleUseLayerParams from "./ExampleUseLayerParams/App";
 
 
 const AppSelector = () => {
-  const Apps = ['SimpleCounter', 'Calculator', 'ChatApp', 'ChartApp'];
+  const Apps = ['SimpleCounter', 'Calculator', 'ChatApp', 'ChartApp', 'ExampleUseLayerParams'];
   const [app, setApp] = useState("");
 
   return (
@@ -37,6 +38,8 @@ const AppSelector = () => {
             return (<ChatApp />);
           case "ChartApp":
             return (<ChartApp />);
+          case "ExampleUseLayerParams":
+            return (<ExampleUseLayerParams />);
           default:
             return (<div></div>);
         }})()}

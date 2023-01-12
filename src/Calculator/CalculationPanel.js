@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import { useLayerPrams, useEffectWithLayer, Layer, useLayerManager } from "../COPLib";
+import { useLayerParams, useEffectWithLayer, Layer, useLayerManager } from "../COPLib";
 
 const CalculationPanel = () => {
     const [numText1, setNumText1] = useState("0");
     const [numText2, setNumText2] = useState("0");
     const [operatorText, setOperatorText] = useState("+");
     const [result, setResult] = useState("0");
-    const [getInputRegExp, setInputRegExp] = useLayerPrams(undefined, ["Float", "Integer"]);
+    const [getInputRegExp, setInputRegExp] = useLayerParams(undefined, ["Float", "Integer"]);
     const refInputNumText1 = useRef();
     const refInputNumText2 = useRef();
     const refSelectOperator = useRef();

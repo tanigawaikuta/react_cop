@@ -39,7 +39,7 @@ useEffect(() => {
 }, []);
 ```
 
-### useLayerPrams
+### useLayerParams
 
 レイヤのアクティブ状況に応じて内容が切り替わる特殊な変数を定義する。第一引数が初期値で、第二引数がこの変数を使う可能性があるレイヤ名の配列である。第二引数で指定した配列の先頭のレイヤからアクティブかどうか調べ、アクティブなレイヤが見つかれば、そのレイヤに応じた内容に変数が切り替わる。アクティブなレイヤが無い場合はundefinedが返る。
 
@@ -47,8 +47,8 @@ useEffect(() => {
 
 ```
 const [text, setText] = useState("");
-const [getButtonLabel, setButtonLabel] = useLayerPrams("", ["LayerA", "LayerB"]);
-const [getCount, setCount] = useLayerPrams(0, ["LayerA", "LayerB"]);
+const [getButtonLabel, setButtonLabel] = useLayerParams("", ["LayerA", "LayerB"]);
+const [getCount, setCount] = useLayerParams(0, ["LayerA", "LayerB"]);
 
 useEffect(() => {
     setButtonLabel("A", "LayerA");

@@ -39,7 +39,7 @@ const InputField = ({ setData }) => {
             layerManager.activateLayer("APPLE");
         } else {
             layerManager.deactivateLayer("APPLE");
-            layerManager.activateLayer("TESLA");    
+            layerManager.activateLayer("TESLA");
         }
         setData(data);
     };
