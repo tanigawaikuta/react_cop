@@ -1,32 +1,51 @@
 import { useState } from "react";
 import SimpleCounterApp from "./SimpleCounter/SimpleCounterApp";
 import CalculatorApp from "./Calculator/CalculatorApp";
+import ChatApp from "./ChatApp/ChatApp";
+import ChartApp from "./ChartApp/ChartApp";
+import ExampleUseLayerParams from "./ExampleUseLayerParams/App";
+
 
 const AppSelector = () => {
-  const [isSelectedApp, setIsSelectedApp] = useState(false);
-  const [selectedAppName, setSelectedAppName] = useState("SimpleCounter");
+  const Apps = ['SimpleCounter', 'Calculator', 'ChatApp', 'ChartApp', 'ExampleUseLayerParams'];
+  const [app, setApp] = useState("");
 
-  if (!isSelectedApp) {
-    return (
+  return (
+    <div>
+      <form>
+        <label>
+          Example App: 
+            <select
+              id="app"
+              value={app}
+              onChange={(e) => {setApp(e.target.value)}}
+            >
+            <option>Select App ...</option>
+
+            {Apps.map((app) => (
+              <option key={app}>{app}</option>
+            ))}
+            </select>
+        </label>
+      </form>
       <div>
-        <select onChange={(e) => setSelectedAppName(e.target.value)}>
-          <option value="SimpleCounter">SimpleCounter</option>
-          <option value="Calculator">Calculator</option>
-        </select>
-        <font> </font>
-        <button onClick={(e) => setIsSelectedApp(true)}>Select App</button>
+        {(() => {switch(app) {
+          case "SimpleCounter":
+            return (<SimpleCounterApp />);
+          case "Calculator":
+            return (<CalculatorApp />);
+          case "ChatApp":
+            return (<ChatApp />);
+          case "ChartApp":
+            return (<ChartApp />);
+          case "ExampleUseLayerParams":
+            return (<ExampleUseLayerParams />);
+          default:
+            return (<div></div>);
+        }})()}
       </div>
-    );
-  } else {
-    switch (selectedAppName) {
-      case "SimpleCounter":
-        return (<SimpleCounterApp />);
-      case "Calculator":
-        return (<CalculatorApp />);
-      default:
-        return (<div></div>);
-    }
-  }
+    </div>
+  )
 }
 
 export default AppSelector;

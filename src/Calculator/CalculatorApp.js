@@ -7,7 +7,9 @@ const CalculatorApp = () => {
   const layerManager = useLayerManager();
   // initializing layer and component
   useEffect(() => {
-    // Activates layer A at init
+    // Deactivate Layer Integer at init
+    layerManager.deactivateLayer("Integer");
+    // Activates layer Float at init
     layerManager.activateLayer("Float");
   }, []);
 

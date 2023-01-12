@@ -89,7 +89,7 @@ export const useLayerManager = () => {
     return layerManager;
 };
 
-export const useLayerPrams = (initialValue, layers) => {
+export const useLayerParams = (initialValue, layers) => {
     const [layerPrams] = useState({});
     const [, setCount] = useState(0);
     const layerManager = useLayerManager();
