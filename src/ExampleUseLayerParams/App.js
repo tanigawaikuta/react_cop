@@ -7,8 +7,8 @@ function App() {
     const layerManager = useLayerManager();
     const layerState = layerManager.getLayerState();
 
-    const [pram1, setPram1] = useLayerParams(0, ["LayerA", "LayerB"]);
-    const [pram2, setPram2] = useLayerParams("Hello", ["LayerA", "LayerB"]);
+    const [param1, setParam1] = useLayerParams(0, ["LayerA", "LayerB"]);
+    const [param2, setParam2] = useLayerParams("Hello", ["LayerA", "LayerB"]);
 
     const [isLayerA, setIsLayerA] = useState(true);
     useEffect(() => {
@@ -26,10 +26,10 @@ function App() {
         <button onClick={() => setIsLayerA(!isLayerA)}>{isLayerA?"LayerA":"LayerB"}</button>
 
         <Layer condition={layerState.LayerA}>
-            <CmpA pram1={pram1} pram2={pram2} setPram1={setPram1} setPram2={setPram2}/>
+            <CmpA param1={param1} param2={param2} setParam1={setParam1} setParam2={setParam2}/>
         </Layer>
         <Layer condition={layerState.LayerB}>
-            <CmpB pram1={pram1} pram2={pram2} setPram1={setPram1} setPram2={setPram2}/>
+            <CmpB param1={param1} param2={param2} setParam1={setParam1} setParam2={setParam2}/>
         </Layer>
     </div>
   );
