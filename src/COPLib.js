@@ -153,7 +153,7 @@ export const useEffectWithLayer = (callback, condition, dependencys = []) => {
     useEffect(newCallback, newDependencys);
 };
 
-export const Layer = ({condition, children}) => { 
+export const Layer = ({condition, children}) => {
     if(condition) {
         return(
             <Fragment>

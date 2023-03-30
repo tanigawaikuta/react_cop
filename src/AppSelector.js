@@ -4,10 +4,11 @@ import CalculatorApp from "./Calculator/CalculatorApp";
 import ChatApp from "./ChatApp/ChatApp";
 import ChartApp from "./ChartApp/ChartApp";
 import ExampleUseLayerParams from "./ExampleUseLayerParams/App";
+import ExampleMultiLayers from "./ExampleMultiLayers/App";
 
 
 const AppSelector = () => {
-  const Apps = ['SimpleCounter', 'Calculator', 'ChatApp', 'ChartApp', 'ExampleUseLayerParams'];
+  const Apps = ['SimpleCounter', 'Calculator', 'ChatApp', 'ChartApp', 'ExampleUseLayerParams', 'ExampleMultiLayers'];
   const [app, setApp] = useState("");
 
   return (
@@ -40,6 +41,8 @@ const AppSelector = () => {
             return (<ChartApp />);
           case "ExampleUseLayerParams":
             return (<ExampleUseLayerParams />);
+          case "ExampleMultiLayers":
+            return (<ExampleMultiLayers />)
           default:
             return (<div></div>);
         }})()}
