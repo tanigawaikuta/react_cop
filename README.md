@@ -2,6 +2,12 @@
 
 Experimental programs for realizing Context-oriented Programming(COP) on React project.
 
+## Prerequisite
+
+|Tool|Version|
+|-|-|
+|Node|`>= 19.3.0`|
+
 ## Operation Instruction
 
 You can run Samples following command:
